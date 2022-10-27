@@ -2,23 +2,19 @@ import windows.ExplainWindow;
 import windows.HelpWindow;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Arrays;
+import java.awt.event.*;
 
 public class NimView {
     NimController controller;
     private JPanel application;
-    private JButton userBtn;
+    private JButton userSubmitBtn;
     private JTextField UserRowInput;
-    private JTextArea game;
+    private JTextArea gameField;
     private JButton helpBtn;
     private JTextField UserCountInput;
     private JButton newGameBtn;
-    private JButton besterZugButton;
-    private JButton wieWirdGespieltButton;
+    private JButton bestMoveBtn;
+    private JButton howToPlayBtn;
     private HelpWindow helpWindow;
     private ExplainWindow explainWindow;
 
@@ -35,6 +31,37 @@ public class NimView {
 
     public NimView() {
         init();
+        addActionListeners();
+        UserCountInput.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    isInputValid(UserCountInput, UserCountInput.getText());
+                    enableUserBtn();
+                }
+            }
+        });
+        UserRowInput.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    isInputValid(UserRowInput, UserRowInput.getText());
+                    enableUserBtn();
+                }
+            }
+        });
+    }
+
+    private void init() {
+        controller = new NimController(this);
+        helpWindow = new HelpWindow();
+        explainWindow = new ExplainWindow();
+        helpBtn.hide();
+        howToPlayBtn.hide();
+        bestMoveBtn.hide();
+    }
+
+    private void addActionListeners() {
         helpBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -42,29 +69,24 @@ public class NimView {
                 helpWindow.setVisible(true);
             }
         });
-        wieWirdGespieltButton.addMouseListener(new MouseAdapter() {
+        howToPlayBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 explainWindow.setVisible(true);
             }
         });
-        newGameBtn.addMouseListener(new MouseAdapter() {
+        bestMoveBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
             }
         });
-        besterZugButton.addMouseListener(new MouseAdapter() {
+        userSubmitBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-            }
-        });
-        userBtn.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                if (userSubmitBtn.isEnabled()) convertAndMakeMove();
             }
         });
         newGameBtn.addMouseListener(new MouseAdapter() {
@@ -93,10 +115,32 @@ public class NimView {
         });
     }
 
+    public void disableAndClearUserInputs() {
+        UserCountInput.setText("");
+        UserRowInput.setText("");
+        UserCountInput.setEditable(false);
+        UserRowInput.setEditable(false);
+        userSubmitBtn.setEnabled(false);
+    }
+
+    private void convertAndMakeMove() {
+        int row, count;
+
+        try {
+            count = Integer.parseInt(UserCountInput.getText());
+            row = Integer.parseInt(UserRowInput.getText());
+        } catch (Error e) {
+            System.out.println(e);
+            throw e;
+
+        }
+        controller.playerMove(row, count);
+    }
+
     private void enableUserBtn() {
         String rowText = UserRowInput.getText();
         String countText = UserCountInput.getText();
-        userBtn.setEnabled(!rowText.trim().equals("") && !countText.trim().equals(""));
+        userSubmitBtn.setEnabled(!rowText.trim().equals("") && !countText.trim().equals(""));
     }
 
     private void isInputValid(JTextField component, String text) {
@@ -109,39 +153,25 @@ public class NimView {
         if (number <= 0) component.setText("");
     }
 
-    private void init() {
-        controller = new NimController(this);
-        helpWindow = new HelpWindow();
-        explainWindow = new ExplainWindow();
-    }
 
     public void setText(String s) {
-        game.setText(s);
+        gameField.setText(s);
     }
 
-    private int[] getRows() {
-        String[] rows = UserRowInput.getText().split(",");
-        int[] intRows = new int[rows.length];
-        for (int i = 0; i < rows.length; i++) {
-            try {
-                intRows[i] = Integer.parseInt(rows[i].trim());
-            } catch (Error error) {
-                System.out.println(error);
-            }
-
-        }
-        return intRows;
+    public String getText() {
+        return gameField.getText();
     }
+
 
     public void clearPlayingField() {
-        game.setText("");
+        gameField.setText("");
     }
 
-    public void setRows(String[][] rows) {
-        String stringRows = "";
-        for (String[] row : rows) {
-            stringRows = Arrays.toString(row) + "\n";
-        }
-        game.setText(stringRows);
+    public void setRows(String rows) {
+        gameField.setText(rows);
+    }
+
+    public void appendText(String s) {
+        gameField.setText(gameField.getText() + "\n" + s);
     }
 }

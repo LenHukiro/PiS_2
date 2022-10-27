@@ -1,49 +1,73 @@
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Random;
 
-class NimController implements ActionListener {
+class NimController {
 
     NimView view;
     Nim game;
+
+    private enum Turn {PLAYER_MOVE, COMPUTER_MOVE}
+
+    ;
+
+    Turn turn = Turn.PLAYER_MOVE;
 
     NimController(NimView view) {
         this.view = view;
     }
 
-    public void newGame(){
-        String[][] rows = getRows();
-        int[] rowCount= getRowCount(rows);
-        game = Nim.of(rowCount);
-        view.setRows(rows);
+
+    public void newGame() {
         view.clearPlayingField();
+        game = Nim.of(createRowCount());
+        view.setRows(game.toString());
     }
 
-    private int[] getRowCount(String[][] rows) {
-        int[] rowCount = new int[rows.length];
-        for (int i = 0; i <rowCount.length; i++) {
-            rowCount[i] = rows[i].length;
-        }
-        return rowCount;
-    }
-
-    private String[][] getRows() {
+    private int[] createRowCount() {
         Random r = new Random();
-        int rowCount = r.nextInt(3,7);
-        String[][] rows = new String[7][rowCount];
-            for (int i = 0; i < rowCount; i++) {
-                for (int j = 0; j <= i; j++) {
-                rows[j][i] = "I ";
-            }
+        int[] filledRowCount = new int[r.nextInt(5, 7)];
+        for (int i = 1; i <= filledRowCount.length; i++) {
+            filledRowCount[i - 1] = i;
         }
-
-        return rows;
+        return filledRowCount;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-       // view.setRows(game.toString());
+    public void playerMove(int row, int count) {
+        game = game.play(Move.of(row - 1, count));
+        view.setRows(game.toString());
+        turn = Turn.COMPUTER_MOVE;
+        if (!checkIfGameOver()) computerMove();
+        checkIfGameOver();
 
+    }
+
+    private boolean checkIfGameOver() {
+        if (game.isGameOver()) {
+            displayWinner();
+            view.disableAndClearUserInputs();
+            return true;
+        }
+        return false;
+    }
+
+    private void displayWinner() {
+        if (turn == Turn.PLAYER_MOVE) playerWon();
+        else computerWon();
+    }
+
+    private void computerWon() {
+        view.setText(view.getText() + "\n" + "Der Computer hat gewonnen.");
+    }
+
+    private void playerWon() {
+        view.setText(view.getText() + "\n" + "Sie haben gewonnen.");
+    }
+
+    private void computerMove() {
+        Move m = game.randomMove();
+        game = game.play(m);
+        checkIfGameOver();
+        turn = Turn.PLAYER_MOVE;
+        view.setRows(game.toString());
+        view.appendText("Der Computer hat " + m.number + " Holzstäbchen aus der Reihe " + (m.row + 1) + " genommen.");
     }
 }

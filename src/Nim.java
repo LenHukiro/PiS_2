@@ -82,7 +82,11 @@ class Nim implements NimGame {
     }
     public String toString() {
         String s = "";
-        for(int n : rows) s += "\n" + "I ".repeat(n);
+        int i = 1;
+        for(int n : rows){
+            s += "\n"+ i +". " + "I ".repeat(n);
+            i++;
+        }
         return s;
     }
 }
