@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="38c2479e-a4b5-432c-9e0b-ae17b8a27b02" name="Changes" comment="initial commit">
+    <list default="true" id="38c2479e-a4b5-432c-9e0b-ae17b8a27b02" name="Changes" comment="structur fixes">
+      <change afterPath="$PROJECT_DIR$/src/windows/ExplainWindow.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/windows/ExplainWindow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/windows/HelpWindow.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/windows/HelpWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NimController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NimController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NimView.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/NimView.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/NimView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NimView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,18 +35,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "229",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Nikla\IdeaProjects\PiS_uebung_2\src\windows" />
       <recent name="C:\Users\Nikla\IdeaProjects\PiS_uebung_2" />
     </key>
   </component>
@@ -74,7 +83,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666850839963</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="structur fixes">
+      <created>1666856293038</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1666856293038</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -90,6 +106,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="initial commit" />
+    <MESSAGE value="structur fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="structur fixes" />
   </component>
 </project>
